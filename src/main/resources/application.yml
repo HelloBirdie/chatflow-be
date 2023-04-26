@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=chatflow
+    username: postgres
+    password: admin
+  flyway:
+    enabled: true
+    schemas: chatflow
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: chatflow
+        jdbc:
+          time_zone: UTC
+        format_sql: true
+    show-sql: true
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
