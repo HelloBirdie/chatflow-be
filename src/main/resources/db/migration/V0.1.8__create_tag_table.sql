@@ -1,0 +1,11 @@
+CREATE TABLE "tag" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "name" VARCHAR(255) NOT NULL,
+    "mindmap_id" BIGSERIAL NOT NULL,
+    CONSTRAINT fk_mindmap_tag
+        FOREIGN KEY(mindmap_id)
+        REFERENCES "mindmap"(id),
+    "is_deleted" BOOLEAN DEFAULT FALSE NOT NULL,
+    "created_time" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "updated_time" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
