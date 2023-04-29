@@ -36,10 +36,10 @@ public class User {
     private int subscriptionLevel;
 
     @CreationTimestamp
-    private OffsetDateTime createdTime;
+    private OffsetDateTime createTime;
 
     @UpdateTimestamp
-    private OffsetDateTime updatedTime;
+    private OffsetDateTime updateTime;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
