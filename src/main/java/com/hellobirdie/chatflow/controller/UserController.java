@@ -24,4 +24,7 @@ public class UserController {
     public ResponseEntity<UserGetDto> createUser(@Valid @RequestBody UserPostDto userPostDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userPostDto));
     }
+
+    //TODO: Get all users profile. How to use spring boot to get user ID?
+
 }
