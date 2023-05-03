@@ -1,4 +1,5 @@
 package com.hellobirdie.chatflow.dto;
+import java.lang.RuntimeException;
 
 
 import lombok.AllArgsConstructor;
@@ -13,4 +14,20 @@ import java.util.List;
 public class ErrorDto {
     private String error;
     private List<String> details;
+
+    public class IncorrectPasswordException extends RuntimeException {
+
+        public IncorrectPasswordException() {
+            super("Old password is not correct:");
+        }
+    }
+    
+    public class PasswordNotConfirmedException extends RuntimeException {
+    
+        public PasswordNotConfirmedException() {
+            super("New password is not confirmed");
+        }
+    }
 }
+
+
