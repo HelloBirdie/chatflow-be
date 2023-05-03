@@ -61,19 +61,20 @@ public class UserService {
     public UserGetDto updatePwdById(Long id, UserPwdDto userPwdDto) {
         List<Long> idList = Collections.singletonList(id);
         User user = userRepository.findAllById(idList).get(0);
-
-        if(!user.getPassword().equals(userPwdDto.getOldPassword())){
-            throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException(userPwdDto.getOldPassword());
+        if (!user.getPassword().equals(userPwdDto.getOldPassword())) {
+            log.warn("Old password is incorrect");
+            throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
         }
-
-        else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())){
-            log.info("New password is not confirmed");
+        //TODO: User must enter the new password twice to confirm
+        else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
+            log.warn("New password is not confirmed");
             throw new ErrorDto("Error message", List.of("Error details")).new PasswordNotConfirmedException();
         }
-
-        else
+        else {
+            log.info("Your password has been updated");
             user.setPassword(userPwdDto.getNewPassword());
             return userMapper.userToUserGetDto(userRepository.save(user));
+        }
     }
 
 }
