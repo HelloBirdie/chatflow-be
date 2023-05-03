@@ -76,4 +76,21 @@ public class UserService {
             return userMapper.userToUserGetDto(userRepository.save(user));
     }
 
+    public UserGetDto login(UserPostDto userPostDto) {
+        User user = userRepository.findByEmail(userPostDto.getEmail());
+
+        if (user == null) {
+            log.info("User {} not found", userPostDto.getEmail());
+            throw new ErrorDto("Error message", List.of("Error details")).new UserNotFoundException(userPostDto.getEmail());
+        }
+
+        if (!user.getPassword().equals(userPostDto.getPassword())) {
+            log.info("Incorrect password for user {}", userPostDto.getEmail());
+            throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException(userPostDto.getPassword());
+        }
+
+        log.info("User {} logged in", userPostDto.getEmail());
+        return userMapper.userToUserGetDto(user);
+    }
+
 }

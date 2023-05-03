@@ -25,8 +25,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userPostDto));
     }
 
-    //TODO: Get all users profile. How to use spring boot to get user ID?
+    @PostMapping("/login")
+    public ResponseEntity<UserGetDto> login(@Valid @RequestBody UserPostDto userPostDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.login(userPostDto));
+    }
 
+    //TODO: Get all users profile. How to use spring boot to get user ID?
     @GetMapping("/sortById")
     public ResponseEntity<List<UserGetDto>> getSortedUserListById(@RequestParam(value = "isAscending", defaultValue = "true") Boolean isAscending) {
         System.out.println(isAscending);
@@ -38,6 +42,7 @@ public class UserController {
     public ResponseEntity<UserGetDto> updatePwdById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserPwdDto userPwdDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePwdById(id, userPwdDto));
     }
+
    
 
 
