@@ -28,9 +28,9 @@ public class UserSetting {
     private String language;
 
     @CreationTimestamp
-    private OffsetDateTime createdTime;
+    private OffsetDateTime createTime;
 
     @UpdateTimestamp
-    private OffsetDateTime updatedTime;
+    private OffsetDateTime updateTime;
 
 }

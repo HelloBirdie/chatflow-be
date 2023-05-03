@@ -22,5 +22,7 @@ public class UserService {
 
         log.info("Saving new user {} to database", user.getEmail());
         return userMapper.userToUserGetDto(userRepository.save(user));
+
+        // TODO: add user setting
     }
 }

@@ -22,7 +22,7 @@ public class UserGetDto {
 
     private UserSettingSlimDto userSetting;
 
-    private OffsetDateTime createdTime;
-    private OffsetDateTime updatedTime;
+    private OffsetDateTime createTime;
+    private OffsetDateTime updateTime;
 
 }

@@ -28,4 +28,7 @@ public class UserPostDto {
     @Pattern(regexp = "^(?=\\S*[a-zA-Z])(?=\\S*[0-9#!\"$%&'()*+,-./:;<=>?@\\[\\]^_`{|}~]).{8,}$",
             message = "Your password must be at least 8 character long and contains at least one non-letter character.")
     private String password;
+
+    @NotEmpty(message = "Avatar must not be empty")
+    private String avatar;
 }
