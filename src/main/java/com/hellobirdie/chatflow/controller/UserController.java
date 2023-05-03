@@ -2,7 +2,6 @@ package com.hellobirdie.chatflow.controller;
 
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
-import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -32,13 +31,4 @@ public class UserController {
         System.out.println(isAscending);
         return ResponseEntity.status(HttpStatus.OK).body(userService.getSortedUserListByID(isAscending));
     }
-
-    //TODO: Update the user's password based on authorization
-    @PostMapping("/updatePwdById")
-    public ResponseEntity<UserGetDto> updatePwdById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserPwdDto userPwdDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePwdById(id, userPwdDto));
-    }
-   
-
-
 }
