@@ -65,12 +65,12 @@ public class UserService {
             log.warn("Old password is incorrect");
             throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
         }
-        //TODO: User must enter the new password twice to confirm
         else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
             log.warn("New password is not confirmed");
             throw new ErrorDto("Error message", List.of("Error details")).new PasswordNotConfirmedException();
         }
         else {
+            //TODO: encode the password
             log.info("Your password has been updated");
             user.setPassword(userPwdDto.getNewPassword());
             return userMapper.userToUserGetDto(userRepository.save(user));
