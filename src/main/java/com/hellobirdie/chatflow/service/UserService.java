@@ -5,6 +5,7 @@ import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.entity.User;
+import com.hellobirdie.chatflow.entity.UserSetting;
 import com.hellobirdie.chatflow.mapper.UserMapper;
 import com.hellobirdie.chatflow.repository.UserRepository;
 import com.hellobirdie.chatflow.dto.ErrorDto.IncorrectPasswordException;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,18 +33,25 @@ import java.util.Collections;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final UserSettingService userSettingService;
 
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserGetDto createUser(UserPostDto userPostDto) {
         String encodedPwd = passwordEncoder.encode(userPostDto.getPassword());
         User user = userMapper.userPostDtoToUser(userPostDto);
         user.setPassword(encodedPwd);
 
         log.info("Saving new user {} to database", user.getEmail());
-        return userMapper.userToUserGetDto(userRepository.save(user));
+        User newUser = userRepository.save(user);
 
-        // TODO: add user setting
+        // create user setting
+        UserSetting userSetting = userSettingService.createUserSettingFromUser(newUser);
+
+        newUser.setUserSetting(userSetting);
+
+        return userMapper.userToUserGetDto(newUser);
     }
 
     public List<UserGetDto> getSortedUserListByID(Boolean isAscending) {
