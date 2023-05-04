@@ -17,8 +17,8 @@ public class ErrorDto {
 
     public class IncorrectPasswordException extends RuntimeException {
 
-        public IncorrectPasswordException(String temp_pwd) {
-            super("Old password is not correct:"+temp_pwd);
+        public IncorrectPasswordException() {
+            super("Old password is not correct:");
         }
     }
     
