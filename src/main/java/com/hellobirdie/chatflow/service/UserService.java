@@ -2,6 +2,7 @@ package com.hellobirdie.chatflow.service;
 
 
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
+import com.hellobirdie.chatflow.dto.user.UserLoginDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.entity.User;
@@ -77,10 +78,10 @@ public class UserService {
         }
     }
 
-    public UserGetDto loginById(Long id, UserPwdDto userPwdDto) {
+    public UserGetDto loginById(Long id, UserLoginDto userLoginDto) {
         List<Long> idList = Collections.singletonList(id);
         User user = userRepository.findAllById(idList).get(0);
-        if (user.getPassword().equals(userPwdDto.getOldPassword())) {
+        if (user.getPassword().equals(userLoginDto.getPassword())) {
             log.info("id: " + user.getId()+ ", name: " + user.getUsername() + " successfully logins");
             return userMapper.userToUserGetDto(user);
         }

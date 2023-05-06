@@ -1,6 +1,7 @@
 package com.hellobirdie.chatflow.controller;
 
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
+import com.hellobirdie.chatflow.dto.user.UserLoginDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.service.UserService;
@@ -40,8 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/loginById")
-    public ResponseEntity<UserGetDto> loginById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserPwdDto userPwdDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(id, userPwdDto));
+    public ResponseEntity<UserGetDto> loginById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserLoginDto userLoginDto) {
+        System.out.println("id: " + id + ", password: " + userLoginDto.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(id, userLoginDto));
     }
 
 
