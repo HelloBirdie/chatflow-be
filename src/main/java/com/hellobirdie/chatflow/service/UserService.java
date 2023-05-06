@@ -88,4 +88,16 @@ public class UserService {
         }
     }
 
+    public UserGetDto loginById(Long id, UserPwdDto userPwdDto) {
+        List<Long> idList = Collections.singletonList(id);
+        User user = userRepository.findAllById(idList).get(0);
+        if (user.getPassword().equals(userPwdDto.getOldPassword())) {
+            log.info("id: " + user.getId()+ ", name: " + user.getUsername() + " successfully logins");
+            return userMapper.userToUserGetDto(user);
+        }
+        else {
+            log.warn("password is incorrect");
+            throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
+        }
+    }
 }
