@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePwdById(id, userPwdDto));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginById")
     public ResponseEntity<UserGetDto> loginById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserPwdDto userPwdDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(id, userPwdDto));
     }
