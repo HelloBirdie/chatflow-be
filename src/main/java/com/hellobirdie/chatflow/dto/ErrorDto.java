@@ -28,6 +28,13 @@ public class ErrorDto {
             super("New password is not confirmed");
         }
     }
+
+    public class UserNotFoundException extends RuntimeException {
+
+        public UserNotFoundException() {
+            super("User not found");
+        }
+    }
 }
 
 

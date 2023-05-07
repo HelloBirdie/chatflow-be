@@ -40,10 +40,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePwdById(id, userPwdDto));
     }
 
-    @PostMapping("/loginById")
-    public ResponseEntity<UserGetDto> loginById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserLoginDto userLoginDto) {
-        System.out.println("id: " + id + ", password: " + userLoginDto.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(id, userLoginDto));
+    @PostMapping("/loginByEmail")
+    public ResponseEntity<UserGetDto> loginByEmail(@RequestParam(value = "email") String email,@Valid @RequestBody UserLoginDto userLoginDto) {
+        System.out.println("email: " + email + ", password: " + userLoginDto.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(email, userLoginDto));
     }
 
 
