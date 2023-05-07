@@ -41,9 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserGetDto> loginByEmail(@RequestParam(value = "email") String email,@Valid @RequestBody UserLoginDto userLoginDto) {
-        System.out.println("email: " + email + ", password: " + userLoginDto.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(email, userLoginDto));
+    public ResponseEntity<UserGetDto> loginByEmail(@Valid @RequestBody UserLoginDto userLoginDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(userLoginDto));
     }
 
 
