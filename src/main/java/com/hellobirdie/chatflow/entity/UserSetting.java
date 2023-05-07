@@ -32,5 +32,4 @@ public class UserSetting {
 
     @UpdateTimestamp
     private OffsetDateTime updateTime;
-
 }
