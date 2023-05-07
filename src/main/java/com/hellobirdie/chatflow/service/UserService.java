@@ -18,12 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Collections;
-
 
 
 @Service
@@ -78,9 +74,14 @@ public class UserService {
         }
     }
 
-    public UserGetDto loginById(Long id, UserLoginDto userLoginDto) {
-        List<Long> idList = Collections.singletonList(id);
-        User user = userRepository.findAllById(idList).get(0);
+    public UserGetDto loginById(String email, UserLoginDto userLoginDto) {
+        Optional<User> userList = userRepository.findByEmail(email);
+        if (userList.isEmpty()) {
+            log.error("User with email {} not found", email);
+            throw new ErrorDto("Error message", List.of("Error details")).new UserNotFoundException();
+        }
+
+        User user = userList.get();
         if (user.getPassword().equals(userLoginDto.getPassword())) {
             log.info("id: " + user.getId()+ ", name: " + user.getUsername() + " successfully logins");
             return userMapper.userToUserGetDto(user);
