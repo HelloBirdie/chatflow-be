@@ -42,7 +42,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserGetDto> loginByEmail(@Valid @RequestBody UserLoginDto userLoginDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.loginById(userLoginDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.loginByEmail(userLoginDto));
     }
 
 

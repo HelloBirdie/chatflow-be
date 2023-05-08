@@ -74,7 +74,7 @@ public class UserService {
         }
     }
 
-    public UserGetDto loginById(UserLoginDto userLoginDto) {
+    public UserGetDto loginByEmail(UserLoginDto userLoginDto) {
         Optional<User> userList = userRepository.findByEmail(userLoginDto.getEmail());
         if (userList.isEmpty()) {
             log.error("User with email {} not found", userLoginDto.getEmail());
