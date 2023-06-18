@@ -2,10 +2,10 @@ package com.hellobirdie.chatflow.service;
 
 
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
+import com.hellobirdie.chatflow.dto.user.UserLoginDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.entity.User;
-import com.hellobirdie.chatflow.entity.UserSetting;
 import com.hellobirdie.chatflow.mapper.UserMapper;
 import com.hellobirdie.chatflow.repository.UserRepository;
 import com.hellobirdie.chatflow.dto.ErrorDto.IncorrectPasswordException;
@@ -16,15 +16,10 @@ import ch.qos.logback.core.joran.conditional.ElseAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Collections;
 
 
 @Service
@@ -33,42 +28,31 @@ import java.util.Collections;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final UserSettingService userSettingService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    @Transactional
     public UserGetDto createUser(UserPostDto userPostDto) {
-        String encodedPwd = passwordEncoder.encode(userPostDto.getPassword());
         User user = userMapper.userPostDtoToUser(userPostDto);
-        user.setPassword(encodedPwd);
 
         log.info("Saving new user {} to database", user.getEmail());
-        User newUser = userRepository.save(user);
+        return userMapper.userToUserGetDto(userRepository.save(user));
 
-        // create user setting
-        UserSetting userSetting = userSettingService.createUserSettingFromUser(newUser);
-
-        newUser.setUserSetting(userSetting);
-
-        return userMapper.userToUserGetDto(newUser);
+        // TODO: add user setting
     }
 
     public List<UserGetDto> getSortedUserListByID(Boolean isAscending) {
         List<User> userList = userRepository.findAll();
         List<UserGetDto> userGetDtoList = new ArrayList<>();
-        for (User user : userList) {
+        for (User user: userList){
             userGetDtoList.add(userMapper.userToUserGetDto(user));
         }
         System.out.println(isAscending);
-        if (isAscending == true)
+        if(isAscending == true)
             return userGetDtoList.stream()
                     .sorted(Comparator.comparing(UserGetDto::getId))
                     .collect(Collectors.toList());
         else
             return userGetDtoList.stream()
-                    .sorted(Comparator.comparing(UserGetDto::getId).reversed())
-                    .collect(Collectors.toList());
+                .sorted(Comparator.comparing(UserGetDto::getId).reversed())
+                .collect(Collectors.toList());
     }
 
     public UserGetDto updatePwdById(Long id, UserPwdDto userPwdDto) {
@@ -77,10 +61,12 @@ public class UserService {
         if (!user.getPassword().equals(userPwdDto.getOldPassword())) {
             log.warn("Old password is incorrect");
             throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
-        } else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
+        }
+        else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
             log.warn("New password is not confirmed");
             throw new ErrorDto("Error message", List.of("Error details")).new PasswordNotConfirmedException();
-        } else {
+        }
+        else {
             //TODO: encode the password
             log.info("Your password has been updated");
             user.setPassword(userPwdDto.getNewPassword());
@@ -88,4 +74,21 @@ public class UserService {
         }
     }
 
+    public UserGetDto loginByEmail(UserLoginDto userLoginDto) {
+        Optional<User> userList = userRepository.findByEmail(userLoginDto.getEmail());
+        if (userList.isEmpty()) {
+            log.error("User with email {} not found", userLoginDto.getEmail());
+            throw new ErrorDto("Error message", List.of("Error details")).new UserNotFoundException();
+        }
+
+        User user = userList.get();
+        if (user.getPassword().equals(userLoginDto.getPassword())) {
+            log.info("id: " + user.getId()+ ", name: " + user.getUsername() + " successfully logins");
+            return userMapper.userToUserGetDto(user);
+        }
+        else {
+            log.warn("password is incorrect");
+            throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
+        }
+    }
 }
