@@ -22,9 +22,15 @@ public class Edge {
     @Column(nullable = false)
     private Long sourceId;
 
-    @Column(unique = true, nullable = false)
-    private String targetId;
-
     @Column(nullable = false)
+    private Long targetId;
+
+    @Column(nullable = true)
     private String edgeInfo;
+
+    @CreationTimestamp
+    private OffsetDateTime create_Time;
+
+    @UpdateTimestamp
+    private OffsetDateTime update_Time;
 }

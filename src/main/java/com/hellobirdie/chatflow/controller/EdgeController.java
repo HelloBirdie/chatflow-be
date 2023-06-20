@@ -23,8 +23,8 @@ public class EdgeController {
     private final EdgeService edgeService;
 
     @PostMapping("/create")
-    public ResponseEntity<EdgeGetDto> createUser(@Valid @RequestBody EdgePostDto EdgePostDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(EdgeService.createEdge(EdgePostDto));
+    public ResponseEntity<EdgeGetDto> createEdge(@RequestBody @Valid EdgePostDto edgePostDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(edgeService.createEdge(edgePostDto));
     }
 
 

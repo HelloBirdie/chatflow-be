@@ -17,12 +17,12 @@ public class EdgeService {
     private final EdgeRepository edgeRepository;
     private final EdgeMapper edgeMapper;
 
-    public EdgeGetDto createEdge(EdgePostDto userPostDto) {
-        Edge edge = edgeMapper.edgePostDtoToEdge(userPostDto);
+    public EdgeGetDto createEdge(EdgePostDto edgePostDto) {
+        Edge edge = edgeMapper.edgePostDtoToEdge(edgePostDto);
 
         log.info("Saving new edge {} to database", edge.getEdgeId());
         return edgeMapper.edgeToEdgeGetDto(edgeRepository.save(edge));
 
 
-//    }
+    }
 }
