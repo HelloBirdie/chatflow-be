@@ -16,9 +16,8 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 public class Edge{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "edge_id")
-    private Long edgeId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "source_id")
     private Long sourceId;

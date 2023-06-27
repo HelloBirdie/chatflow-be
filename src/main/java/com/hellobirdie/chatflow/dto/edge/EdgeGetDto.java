@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @Builder
 public class EdgeGetDto {
-    private Long edgeId;
+    private Long id;
     private Long sourceId;
     private Long targetId;
     private String edgeInfo;

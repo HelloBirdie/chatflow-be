@@ -8,7 +8,8 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EdgeMapper {
-    Edge edgePostDtoToEdge(EdgePostDto edgePostDto);
 
-    EdgeGetDto edgeToEdgeGetDto(Edge edge);
+        Edge edgePostDtoToEdge(EdgePostDto edgePostDto);
+
+        EdgeGetDto edgeToEdgeGetDto(Edge edge);
 }

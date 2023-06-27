@@ -18,7 +18,7 @@ import java.time.OffsetDateTime;
 @Setter
 @AllArgsConstructor
 public class EdgePostDto {
-
+    private Long id;
     private Long sourceId;
 
     private Long targetId;

@@ -24,8 +24,10 @@ public class EdgeService {
     public EdgeGetDto createEdge(EdgePostDto edgePostDto) {
         Edge edge = edgeMapper.edgePostDtoToEdge(edgePostDto);
         //print edge
-        log.info("Edge111111: {}", edge);
-
+        log.info("Edge111111: {}", edge.getId());
+        long i = 1;
+        edge.setId(i);
+        log.info("Edge2222222: {}", edge.getId());
         return edgeMapper.edgeToEdgeGetDto(edgeRepository.save(edge));
     }
 
