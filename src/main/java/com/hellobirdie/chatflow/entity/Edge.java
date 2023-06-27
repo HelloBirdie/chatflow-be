@@ -14,23 +14,26 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Edge {
+public class Edge{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "edge_id")
     private Long edgeId;
 
-    @Column(nullable = false)
+    @Column(name = "source_id")
     private Long sourceId;
 
-    @Column(nullable = false)
+    @Column(name = "target_id")
     private Long targetId;
 
-    @Column(nullable = true)
+    @Column(name = "edge_info")
     private String edgeInfo;
 
     @CreationTimestamp
-    private OffsetDateTime create_Time;
+    @Column(name = "create_time")
+    private OffsetDateTime createTime;
 
     @UpdateTimestamp
-    private OffsetDateTime update_Time;
+    @Column(name = "update_time")
+    private OffsetDateTime updateTime;
 }

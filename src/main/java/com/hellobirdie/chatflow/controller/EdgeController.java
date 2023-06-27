@@ -21,13 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EdgeController {
     private final EdgeService edgeService;
-
+    //create edge
     @PostMapping("/create")
-    public ResponseEntity<EdgeGetDto> createEdge(@RequestBody @Valid EdgePostDto edgePostDto) {
+    public ResponseEntity<EdgeGetDto> createEdge(@Valid @RequestBody EdgePostDto edgePostDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(edgeService.createEdge(edgePostDto));
     }
-
-
-
-
 }
