@@ -1,5 +1,6 @@
 package com.hellobirdie.chatflow.controller;
 
+import com.hellobirdie.chatflow.dto.edge.EdgeDelDto;
 import com.hellobirdie.chatflow.dto.edge.EdgeGetDto;
 import com.hellobirdie.chatflow.dto.edge.EdgePostDto;
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
@@ -26,4 +27,19 @@ public class EdgeController {
     public ResponseEntity<EdgeGetDto> createEdge(@Valid @RequestBody EdgePostDto edgePostDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(edgeService.createEdge(edgePostDto));
     }
+
+    @GetMapping("/delete")
+    public ResponseEntity<EdgeGetDto> deleteEdges(@RequestParam(value = "id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(edgeService.deleteEdge(id));
+    }
+    @PostMapping("/update")
+    public ResponseEntity<EdgeGetDto> updateEdge(@Valid @RequestBody EdgePostDto edgePostDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(edgeService.updateEdge(edgePostDto));
+    }
+
+    @GetMapping("/getEdge")
+    public ResponseEntity<EdgeGetDto> getEdges(@RequestParam(value = "id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(edgeService.getEdge(id));
+    }
+
 }
