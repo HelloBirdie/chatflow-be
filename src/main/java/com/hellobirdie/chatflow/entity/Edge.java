@@ -15,9 +15,10 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Edge{
+
     @Id
     @Column(name = "id")
-    private Long id;
+    private Long Id;
 
     @Column(name = "source_id")
     private Long sourceId;

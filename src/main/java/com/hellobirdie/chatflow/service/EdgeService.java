@@ -7,7 +7,6 @@ import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.entity.Edge;
 import com.hellobirdie.chatflow.entity.User;
-import com.hellobirdie.chatflow.mapper.EdgeDelMapper;
 import com.hellobirdie.chatflow.mapper.EdgeMapper;
 import com.hellobirdie.chatflow.repository.EdgeRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,12 @@ import org.springframework.stereotype.Service;
 public class EdgeService {
     private final EdgeRepository edgeRepository;
     private final EdgeMapper edgeMapper;
-    private final EdgeDelMapper edgeDelMapper;
 
     //create edge
     public EdgeGetDto createEdge(EdgePostDto edgePostDto) {
         Edge edge = edgeMapper.edgePostDtoToEdge(edgePostDto);
         //print edge
+        edge.setId(1L);
         return edgeMapper.edgeToEdgeGetDto(edgeRepository.save(edge));
     }
 
