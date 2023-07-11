@@ -6,7 +6,6 @@ import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
 import com.hellobirdie.chatflow.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class UserController {
 
     //TODO: Update the user's password based on authorization
     @PostMapping("/updatePwdById")
-    public ResponseEntity<UserGetDto> updatePwdById(@RequestParam(value = "id") Long id,@Valid @RequestBody UserPwdDto userPwdDto) {
+    public ResponseEntity<UserGetDto> updatePwdById(@RequestParam(value = "id") Long id, @Valid @RequestBody UserPwdDto userPwdDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePwdById(id, userPwdDto));
     }
 
@@ -47,3 +46,5 @@ public class UserController {
 
 
 }
+
+

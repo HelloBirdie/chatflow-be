@@ -19,7 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll() // Allow all requests
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable(); // Disable CSRF protection for simplicity during development, not recommended for production
+                .csrf().disable() // Disable CSRF protection for simplicity during development, not recommended for production
+                .oauth2Login()  // Enable OAuth2 login
+                .defaultSuccessURL("/loginSuccess") // Redirect to /loginSuccess URL after successful login
+                .failureURL("/loginFailure"); // Redirect to /loginFailure URL after login failure
     }
 
     @Bean
