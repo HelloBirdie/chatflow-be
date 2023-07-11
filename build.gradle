@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.2.Final'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
