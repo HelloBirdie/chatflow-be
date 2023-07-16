@@ -1,6 +1,9 @@
 package com.hellobirdie.chatflow.config;
 
 import com.hellobirdie.chatflow.auth.ChatflowUserDetailService;
+import com.hellobirdie.chatflow.jwt.JwtService;
+import com.hellobirdie.chatflow.jwt.JwtConfig;
+import com.hellobirdie.chatflow.jwt.JwtUsernameAndPasswordAuthFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -37,7 +40,7 @@ public class SecurityConfig {
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
     private final JwtTokenVerifyFilter jwtTokenVerifyFilter;
-    private final JWTService jwtService;
+    private final JwtService jwtService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
