@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -43,6 +44,11 @@ public class SecurityConfig {
     private final JwtTokenVerifyFilter jwtTokenVerifyFilter;
     private final JwtService jwtService;
 
+    private static final String[] AUTH_URL_WHITELIST = {
+            "/users/signup",
+            "/auth/**",
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -59,6 +65,10 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .authorizeRequests(authorize ->
+                        authorize
+                                .antMatchers(AUTH_URL_WHITELIST).permitAll()
+                                .anyRequest().authenticated())
                 .addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager(), secretKey, jwtConfig, jwtService))
                 .addFilterAfter(jwtTokenVerifyFilter, JwtUsernameAndPasswordAuthFilter.class)
                 .exceptionHandling()
