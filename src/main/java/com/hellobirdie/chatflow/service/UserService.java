@@ -16,6 +16,7 @@ import ch.qos.logback.core.joran.conditional.ElseAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,9 +29,15 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
 
     public UserGetDto createUser(UserPostDto userPostDto) {
+
+
+        String encodedPwd = passwordEncoder.encode(userPostDto.getPassword());
         User user = userMapper.userPostDtoToUser(userPostDto);
+        user.setPassword(encodedPwd);
 
         log.info("Saving new user {} to database", user.getEmail());
         return userMapper.userToUserGetDto(userRepository.save(user));
@@ -41,18 +48,18 @@ public class UserService {
     public List<UserGetDto> getSortedUserListByID(Boolean isAscending) {
         List<User> userList = userRepository.findAll();
         List<UserGetDto> userGetDtoList = new ArrayList<>();
-        for (User user: userList){
+        for (User user : userList) {
             userGetDtoList.add(userMapper.userToUserGetDto(user));
         }
         System.out.println(isAscending);
-        if(isAscending == true)
+        if (isAscending == true)
             return userGetDtoList.stream()
                     .sorted(Comparator.comparing(UserGetDto::getId))
                     .collect(Collectors.toList());
         else
             return userGetDtoList.stream()
-                .sorted(Comparator.comparing(UserGetDto::getId).reversed())
-                .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(UserGetDto::getId).reversed())
+                    .collect(Collectors.toList());
     }
 
     public UserGetDto updatePwdById(Long id, UserPwdDto userPwdDto) {
@@ -61,12 +68,10 @@ public class UserService {
         if (!user.getPassword().equals(userPwdDto.getOldPassword())) {
             log.warn("Old password is incorrect");
             throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
-        }
-        else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
+        } else if (!userPwdDto.getConfirmPassword().equals(userPwdDto.getNewPassword())) {
             log.warn("New password is not confirmed");
             throw new ErrorDto("Error message", List.of("Error details")).new PasswordNotConfirmedException();
-        }
-        else {
+        } else {
             //TODO: encode the password
             log.info("Your password has been updated");
             user.setPassword(userPwdDto.getNewPassword());
@@ -83,10 +88,9 @@ public class UserService {
 
         User user = userList.get();
         if (user.getPassword().equals(userLoginDto.getPassword())) {
-            log.info("id: " + user.getId()+ ", name: " + user.getUsername() + " successfully logins");
+            log.info("id: " + user.getId() + ", name: " + user.getUsername() + " successfully logins");
             return userMapper.userToUserGetDto(user);
-        }
-        else {
+        } else {
             log.warn("password is incorrect");
             throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
         }

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
-    private static final String EMAIL_LOGIN_URL = "auth/login/email";
+    private static final String EMAIL_LOGIN_URL = "/auth/login/email";
     private static final String BEARER = "Bearer ";
     private final AuthenticationManager authenticationManager;
     private final SecretKey secretKey;
@@ -61,7 +61,7 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
 //        Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
         long userId = ((ChatflowUserDetail) authResult.getPrincipal()).getId();
 
-        String jwtToken = jwtService.createJwt(email, userId, secretKey, java.sql.Date.valueOf(LocalDate.now().plusDays(1)));
+        String jwtToken = jwtService.createJwt(email, userId, secretKey, java.sql.Date.valueOf(LocalDate.now().plusDays(7)));
 
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("email", email);
