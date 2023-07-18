@@ -2,6 +2,7 @@ package com.hellobirdie.chatflow.controller;
 
 
 import com.hellobirdie.chatflow.dto.auth.GoogleAuthDto;
+import com.hellobirdie.chatflow.dto.auth.GoogleUserProfileDto;
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.jwt.JwtService;
 import com.hellobirdie.chatflow.service.GoogleService;
@@ -25,7 +26,8 @@ import java.time.LocalDate;
 public class OAuthController {
 
     private UserService userService;
-    private GoogleService googleService;
+
+    private final GoogleService googleService;
 
     private JwtService jwtService;
 
@@ -35,15 +37,12 @@ public class OAuthController {
 
     @PostMapping("/login/google")
     public ResponseEntity<?> GoogleAuth(@Valid @RequestBody GoogleAuthDto googleAuthDto) {
-        log.info("google login {}", googleAuthDto);
-        UserGetDto userGetDto = googleService.getUserProfile(googleAuthDto.getAccessToken());
 
-        String email = userGetDto.getEmail();
-        Long userId = userGetDto.getId();
+        GoogleUserProfileDto googleUserProfileDto = googleService.getUserProfile(googleAuthDto.getAccessToken());
 
-        String jwtToken = jwtService.createJwt(email, userId, secretKey, java.sql.Date.valueOf(LocalDate.now().plusDays(7)));
+        System.out.println(googleUserProfileDto);
 
-        return ResponseEntity.ok().header("Authorization", BEARER + jwtToken).body(userGetDto);
+        return null;
 
     }
 }

@@ -29,6 +29,9 @@ cors:
   allowed-methods: "*"
   allowed-headers: "*"
   exposed-headers: "*"
-  
+
 jwt:
   secret-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZ5QIeI0ioHDYGU0RMwGti6Z9/2SReCeFnYZJY5xsbFWRiU"
+
+google:
+  client-id: "393039598382-7k652bidcub7m5fnltcdb776q4kur28g.apps.googleusercontent.com"
