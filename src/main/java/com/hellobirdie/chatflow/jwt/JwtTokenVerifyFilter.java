@@ -58,8 +58,12 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
             ChatflowAuthenticationToken authentication = new ChatflowAuthenticationToken(
                     userId,
                     userDetails,
+                    null,
                     null
             );
+
+
+            System.out.println("UserDetails: " + userDetails.getPassword());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);

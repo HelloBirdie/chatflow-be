@@ -8,6 +8,7 @@ import com.hellobirdie.chatflow.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,6 +43,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserGetDto> loginByEmail(@Valid @RequestBody UserLoginDto userLoginDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.loginByEmail(userLoginDto));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/myInfo")
+    public UserGetDto getUserInfo() {
+        return userService.getUserInfoByToken();
     }
 
 

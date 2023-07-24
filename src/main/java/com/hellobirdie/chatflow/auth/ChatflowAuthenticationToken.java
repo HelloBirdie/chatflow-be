@@ -13,8 +13,8 @@ import java.util.Map;
 public class ChatflowAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private final Long userId;
 
-    public ChatflowAuthenticationToken(Long userId, Object principal, Object credential) {
-        super(principal, credential);
+    public ChatflowAuthenticationToken(Long userId, Object principal, Object credential, Collection<? extends GrantedAuthority> authorities) {
+        super(principal, credential, authorities);
         this.userId = userId;
     }
 
