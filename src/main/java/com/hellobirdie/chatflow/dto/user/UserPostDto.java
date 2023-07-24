@@ -1,6 +1,7 @@
 package com.hellobirdie.chatflow.dto.user;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class UserPostDto {
 
     @NotBlank
