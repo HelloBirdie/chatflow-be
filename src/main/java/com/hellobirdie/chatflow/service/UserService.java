@@ -1,6 +1,7 @@
 package com.hellobirdie.chatflow.service;
 
 
+import com.hellobirdie.chatflow.auth.ChatflowUserDetail;
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.dto.user.UserLoginDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
@@ -16,6 +17,7 @@ import ch.qos.logback.core.joran.conditional.ElseAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -116,6 +118,24 @@ public class UserService {
         }
         User user = userList.get();
         return userMapper.userToUserGetDto(user);
+    }
+
+    public UserGetDto getUserById(Long id) {
+        Optional<User> userList = userRepository.findById(id);
+        if (userList.isEmpty()) {
+            log.error("User with id {} not found", id);
+            throw new ErrorDto("Error message", List.of("Error details")).new UserNotFoundException();
+        }
+        User user = userList.get();
+        return userMapper.userToUserGetDto(user);
+    }
+
+    public UserGetDto getUserInfoByToken() {
+        UserGetDto user;
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = ((ChatflowUserDetail) userDetails).getId();
+        user = getUserById(userId);
+        return user;
     }
 
 }
