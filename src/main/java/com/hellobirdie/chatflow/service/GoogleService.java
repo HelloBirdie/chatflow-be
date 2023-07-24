@@ -26,7 +26,6 @@ public class GoogleService {
 
     public GoogleUserProfileDto getUserProfile(String accessToken) {
 
-        // TODO: fix the time out issue
         log.info("get user profile {} from google", accessToken);
         return webClient
                 .get()

@@ -40,6 +40,8 @@ public class UserService {
         user.setPassword(encodedPwd);
 
         log.info("Saving new user {} to database", user.getEmail());
+
+        // TODO: add duplicate user error handling
         return userMapper.userToUserGetDto(userRepository.save(user));
 
         // TODO: add user setting
@@ -95,4 +97,25 @@ public class UserService {
             throw new ErrorDto("Error message", List.of("Error details")).new IncorrectPasswordException();
         }
     }
+
+    /*Check whether email exist*/
+
+    public boolean isEmailExist(String email) {
+        Optional<User> userList = userRepository.findByEmail(email);
+        if (userList.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public UserGetDto getUserByEmail(String email) {
+        Optional<User> userList = userRepository.findByEmail(email);
+        if (userList.isEmpty()) {
+            log.error("User with email {} not found", email);
+            throw new ErrorDto("Error message", List.of("Error details")).new UserNotFoundException();
+        }
+        User user = userList.get();
+        return userMapper.userToUserGetDto(user);
+    }
+
 }
