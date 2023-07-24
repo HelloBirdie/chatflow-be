@@ -61,10 +61,7 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                     null,
                     null
             );
-
-
-            System.out.println("UserDetails: " + userDetails.getPassword());
-
+            
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
 

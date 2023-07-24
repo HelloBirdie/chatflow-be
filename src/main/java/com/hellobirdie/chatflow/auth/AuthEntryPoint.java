@@ -15,7 +15,6 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authenticationException) throws IOException {
         log.error(authenticationException.getMessage());
-        authenticationException.printStackTrace();
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().print("Unauthorized, please log in or sign up!");
         response.getWriter().flush();
