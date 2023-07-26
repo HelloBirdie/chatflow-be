@@ -1,8 +1,11 @@
 package com.hellobirdie.chatflow.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "mindmap")
@@ -20,7 +23,21 @@ public class Mindmap {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Long ownerId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ai_id", nullable = false)
+    private AiModel aiModel;
+
+    @CreationTimestamp
+    private OffsetDateTime createTime;
+
+    @UpdateTimestamp
+    private OffsetDateTime updateTime;
+
+    @OneToOne(mappedBy = "mindmap", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private MindmapSetting mindmapSetting;
 }

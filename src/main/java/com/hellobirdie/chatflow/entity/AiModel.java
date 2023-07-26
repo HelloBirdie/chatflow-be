@@ -4,29 +4,27 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "mindmap_setting")
+@Table(name = "ai")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MindmapSetting {
+public class AiModel {
 
     @Id
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private Mindmap mindmap;
-
     @Column(nullable = false)
-    private String backgroundColor;
+    private String model;
 
     @CreationTimestamp
     private OffsetDateTime createTime;
