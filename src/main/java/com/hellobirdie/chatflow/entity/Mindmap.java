@@ -23,6 +23,9 @@ public class Mindmap {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String iconCode;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;

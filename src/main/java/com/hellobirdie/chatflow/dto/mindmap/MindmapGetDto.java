@@ -23,7 +23,7 @@ public class MindmapGetDto {
 
     private String iconCode;
 
-    private OffsetDateTime createdTime;
+    private OffsetDateTime createTime;
 
-    private OffsetDateTime updatedTime;
+    private OffsetDateTime updateTime;
 }
