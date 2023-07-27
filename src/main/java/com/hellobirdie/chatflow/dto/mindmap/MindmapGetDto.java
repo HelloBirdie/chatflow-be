@@ -1,5 +1,6 @@
 package com.hellobirdie.chatflow.dto.mindmap;
 
+import com.hellobirdie.chatflow.dto.mindmapSetting.MindmapSettingSlimDto;
 import com.hellobirdie.chatflow.entity.MindmapSetting;
 import lombok.*;
 
@@ -17,7 +18,7 @@ public class MindmapGetDto {
 
     private String name;
 
-    private MindmapSetting mindmapSetting;
+    private MindmapSettingSlimDto mindmapSettingSlimDto;
 
     private String aiModel;
 
