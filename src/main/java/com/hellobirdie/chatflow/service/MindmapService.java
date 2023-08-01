@@ -103,4 +103,29 @@ public class MindmapService {
         }
 
     }
+
+    public MindmapGetDto updateMindmap(Long mindmapId, MindmapPostDto mindmapPostDto) {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = ((ChatflowUserDetail) userDetails).getId();
+
+        // Check if user is owner of mindmap
+        Mindmap mindmap = mindmapRepository.findById(mindmapId).orElseThrow(() -> new IllegalArgumentException("Mindmap not exist. id=" + mindmapId));
+
+        if (mindmap.getOwner().getId() != userId) {
+            throw new IllegalArgumentException("User is not owner of mindmap. userId=" + userId + ", mindmapId=" + mindmapId);
+        } else {
+            AiModel aiModel = aiModelRepository.findById(mindmapPostDto.getAiModelId()).orElseThrow(() -> new IllegalArgumentException("AiModel not exist. id=" + mindmapPostDto.getAiModelId()));
+
+            mindmap.setAiModel(aiModel);
+            mindmap.setName(mindmapPostDto.getName());
+            mindmap.setIconCode(mindmapPostDto.getIconCode());
+
+            mindmap = mindmapRepository.save(mindmap);
+
+            MindmapGetDto mindmapGetDto = mindmapMapper.mindmapToMindmapGetDto(mindmap);
+
+            return mindmapGetDto;
+        }
+
+    }
 }

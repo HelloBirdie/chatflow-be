@@ -37,4 +37,11 @@ public class MindmapController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/update/{mindmapId}")
+    public MindmapGetDto updateMindmap(@PathVariable Long mindmapId, @Valid @RequestBody MindmapPostDto mindmapPostDto) {
+        MindmapGetDto mindmapGetDto = mindmapService.updateMindmap(mindmapId, mindmapPostDto);
+
+        return mindmapGetDto;
+    }
 }
