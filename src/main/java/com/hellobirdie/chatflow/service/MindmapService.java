@@ -83,4 +83,24 @@ public class MindmapService {
         return mindmapGetDto;
 
     }
+
+    @Transactional
+    public void deleteMindmap(Long mindmapId) {
+
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = ((ChatflowUserDetail) userDetails).getId();
+
+        // Check if user is owner of mindmap
+        Mindmap mindmap = mindmapRepository.findById(mindmapId).orElseThrow(() -> new IllegalArgumentException("Mindmap not exist. id=" + mindmapId));
+
+        if (mindmap.getOwner().getId() != userId) {
+            throw new IllegalArgumentException("User is not owner of mindmap. userId=" + userId + ", mindmapId=" + mindmapId);
+        } else {
+            mindmapRepository.deleteById(mindmapId);
+//            mindmapSettingRepository.deleteById(mindmapId); // no need to delete mindmapSetting because of cascade
+
+            log.info("Mindmap deleted. mindmapId=" + mindmapId);
+        }
+
+    }
 }

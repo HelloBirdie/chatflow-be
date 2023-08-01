@@ -30,4 +30,11 @@ public class MindmapController {
 
         return mindmapGetDto;
     }
+
+    @DeleteMapping("/delete/{mindmapId}")
+    public ResponseEntity<Void> createMindmap(@PathVariable Long mindmapId) {
+        mindmapService.deleteMindmap(mindmapId);
+
+        return ResponseEntity.noContent().build();
+    }
 }
