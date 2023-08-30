@@ -16,10 +16,10 @@ import javax.validation.constraints.*;
 public class MessagePostDto {
 
     @NotNull(message = "is_ai_message must not be null")
-    private boolean is_ai_message;
+    private boolean isAiMessage;
 
-    @NotNull(message = "sender_id must not be null")
-    private int sender_id;
+    @NotNull(message = "mindmap id must not be null")
+    private long mindmapId;
 
     @NotBlank(message = "text must not be blank")
     @Size(max = 4028, message = "text can not be more than 4028 characters.")

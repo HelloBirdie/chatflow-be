@@ -22,12 +22,10 @@ import java.time.OffsetDateTime;
 @Builder
 public class MessageGetDto {
 
-        private long id;
-        private boolean is_ai_message;
-        private int sender_id;
-        private String text;
-        private OffsetDateTime createTime;
-        private OffsetDateTime updateTime;
-        private boolean is_deleted;
-
+    private long id;
+    private boolean isAiMessage;
+    private int senderId;
+    private String text;
+    private OffsetDateTime createdTime;
+    private OffsetDateTime updatedTime;
 }

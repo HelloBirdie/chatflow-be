@@ -128,4 +128,8 @@ public class MindmapService {
         }
 
     }
+
+    public Mindmap findById(Long mindmapId) {
+        return mindmapRepository.findById(mindmapId).orElseThrow(() -> new IllegalArgumentException("Mindmap not exist. id=" + mindmapId));
+    }
 }
