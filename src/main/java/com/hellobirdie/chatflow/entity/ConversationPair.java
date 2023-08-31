@@ -1,6 +1,8 @@
 package com.hellobirdie.chatflow.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -30,13 +32,16 @@ public class ConversationPair {
     @JoinColumn(name = "ai_message_id", nullable = false)
     private Message aiMessage;
 
+    @Column(name = "node_count")
+    private int nodeCount;
+
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @Column(name = "created_time", nullable = false, updatable = false)
+    @CreationTimestamp
     private OffsetDateTime createdTime;
 
-    @Column(name = "updated_time", nullable = false)
+    @UpdateTimestamp
     private OffsetDateTime updatedTime;
 
 }

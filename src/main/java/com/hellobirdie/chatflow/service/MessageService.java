@@ -1,6 +1,7 @@
 package com.hellobirdie.chatflow.service;
 
 import com.hellobirdie.chatflow.auth.ChatflowUserDetail;
+import com.hellobirdie.chatflow.dto.conversationPair.ConversationPairGetDto;
 import com.hellobirdie.chatflow.dto.message.MessageGetDto;
 import com.hellobirdie.chatflow.dto.message.MessagePostDto;
 import com.hellobirdie.chatflow.entity.Message;
@@ -21,10 +22,12 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final MindmapService mindmapService;
+    private final ChatbotService chatbotService;
     private final MessageMapper messageMapper;
+    private final ConversationPairService conversationPairService;
 
     @Transactional
-    public MessageGetDto createMessage(MessagePostDto messagePostDto) {
+    public ConversationPairGetDto newMessage(MessagePostDto messagePostDto) {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = ((ChatflowUserDetail) userDetails).getId();
 
@@ -41,6 +44,13 @@ public class MessageService {
 
         message = messageRepository.save(message);
 
-        return messageMapper.messageToMessageGetDto(message);
+        // send message to chatgpt
+        Message aiMessage = chatbotService.getChatbotResponse(messagePostDto);
+
+        // generate conversation pair
+        ConversationPairGetDto conversationPairGetDto = conversationPairService.createConversationPair(message, aiMessage);
+
+
+        return conversationPairGetDto;
     }
 }

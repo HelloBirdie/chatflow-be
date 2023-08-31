@@ -1,10 +1,12 @@
 package com.hellobirdie.chatflow.controller;
 
+import com.hellobirdie.chatflow.dto.conversationPair.ConversationPairGetDto;
 import com.hellobirdie.chatflow.dto.message.MessageGetDto;
 import com.hellobirdie.chatflow.dto.message.MessagePostDto;
 import com.hellobirdie.chatflow.dto.user.UserGetDto;
 import com.hellobirdie.chatflow.dto.user.UserPostDto;
 import com.hellobirdie.chatflow.dto.user.UserPwdDto;
+import com.hellobirdie.chatflow.service.ChatbotService;
 import com.hellobirdie.chatflow.service.MessageService;
 import com.hellobirdie.chatflow.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +25,14 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+    private final ChatbotService chatbotService;
 
     @PostMapping
-    public MessageGetDto createMessage(@RequestBody @Valid MessagePostDto messagePostDto) {
-        MessageGetDto messageGetDto = messageService.createMessage(messagePostDto);
-        return messageGetDto;
+    public ConversationPairGetDto newMessage(@RequestBody @Valid MessagePostDto messagePostDto) {
+        ConversationPairGetDto conversationPairGetDto = messageService.newMessage(messagePostDto);
+//        MessagePostDto aiMessagePostDto = chatbotService.getChatbotResponse(messagePostDto);
+
+
+        return conversationPairGetDto;
     }
 }
