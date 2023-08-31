@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
 public class MessageGetDto {
 
     private long id;
-    private boolean isAiMessage;
+    private boolean aiMessage;
     private int senderId;
     private String text;
     private OffsetDateTime createdTime;

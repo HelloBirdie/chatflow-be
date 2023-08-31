@@ -47,6 +47,8 @@ public class MessageService {
         // send message to chatgpt
         Message aiMessage = chatbotService.getChatbotResponse(messagePostDto);
 
+        aiMessage = messageRepository.save(aiMessage);
+
         // generate conversation pair
         ConversationPairGetDto conversationPairGetDto = conversationPairService.createConversationPair(message, aiMessage);
 

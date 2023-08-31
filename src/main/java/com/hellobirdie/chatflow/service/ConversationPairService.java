@@ -28,6 +28,7 @@ public class ConversationPairService {
                 .build();
 
         conversationPair = conversationPairRepository.save(conversationPair);
+        
 
         return conversationPairMapper.conversationPairToConversationPairGetDto(conversationPair);
     }

@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 public class ChatbotService {
 
     private final MessageMapper messageMapper;
+    private final MindmapService mindmapService;
 
     public Message getChatbotResponse(MessagePostDto messagePostDto) {
 
         String text = messagePostDto.getText();
         Long mindmapId = messagePostDto.getMindmapId();
-        Long aiModelId = messagePostDto.getAiModelId();
+
+        Long aiModelId = 1L;
 
         //TODO: send the message to chatgpt
 
@@ -34,6 +36,8 @@ public class ChatbotService {
 
         Message aiMessage = messageMapper.messagePostDtoToMessage(aiMessagePostDto);
         aiMessage.setSenderId(aiModelId);
+        aiMessage.setAiMessage(true);
+        aiMessage.setMindmap(mindmapService.findById(mindmapId));
 
         return aiMessage;
     }

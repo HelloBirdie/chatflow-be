@@ -24,7 +24,7 @@ public class MessagePostDto {
     private long mindmapId;
 
     @Builder.Default
-    private long aiModelId = 1;
+    private long aiModelId = 1L;
 
     @NotBlank(message = "text must not be blank")
     @Size(max = 4028, message = "text can not be more than 4028 characters.")
