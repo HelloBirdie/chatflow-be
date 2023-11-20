@@ -54,4 +54,10 @@ public class ConversationPairService {
 
         return pairs.map(conversationPairMapper::conversationPairToConversationPairGetDto);
     }
+
+    public ConversationPairGetDto findConversationPairById(Long conversationPairId) {
+        ConversationPair conversationPair = conversationPairRepository.findById(conversationPairId).orElseThrow(() -> new IllegalArgumentException("ConversationPair not exist. id=" + conversationPairId));
+
+        return conversationPairMapper.conversationPairToConversationPairGetDto(conversationPair);
+    }
 }

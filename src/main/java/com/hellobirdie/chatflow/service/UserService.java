@@ -138,4 +138,11 @@ public class UserService {
         return user;
     }
 
+    public Long getUserIdByToken() {
+        
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = ((ChatflowUserDetail) userDetails).getId();
+        return userId;
+    }
+
 }

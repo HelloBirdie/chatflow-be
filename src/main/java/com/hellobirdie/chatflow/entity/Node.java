@@ -43,10 +43,7 @@ public class Node {
 
     @Column(name = "create_time", nullable = false, updatable = false)
     private OffsetDateTime createTime;
-
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
-
+    
     @Column(name = "x", nullable = false)
     private Long x;
 

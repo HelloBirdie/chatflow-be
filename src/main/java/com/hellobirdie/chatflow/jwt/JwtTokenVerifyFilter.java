@@ -61,7 +61,7 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                     null,
                     null
             );
-            
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
 
