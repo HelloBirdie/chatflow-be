@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.json.JSONObject;
 
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
@@ -67,8 +68,18 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
 
         } catch (Exception e) {
             log.error("Cannot set user authentication: {}", e.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid token");
+
+            // Create a JSON object to hold your response data
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("error", "Invalid token");
+            jsonResponse.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+
+            // Set the response content type to JSON
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Write the JSON string to the response
+            response.getWriter().write(jsonResponse.toString());
             response.getWriter().flush();
         }
 
