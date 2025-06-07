@@ -34,4 +34,5 @@ jwt:
   secret-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZ5QIeI0ioHDYGU0RMwGti6Z9/2SReCeFnYZJY5xsbFWRiU"
 
 google:
-  client-id: "393039598382-7k652bidcub7m5fnltcdb776q4kur28g.apps.googleusercontent.com"
+  client-id: "393039598382-7k652bidcub7m5fnltcdb776q4kur28g.apps.googleusercontent.com"  # dengzj
+  # client-id: "560324516162-lonvgk8eijng2iiijhhv9nvsok6v9iq6.apps.googleusercontent.com"  # wuyz
