@@ -15,6 +15,7 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+    repair-on-migrate: true
   jpa:
     properties:
       hibernate:
@@ -36,3 +37,11 @@ jwt:
 google:
   client-id: "393039598382-7k652bidcub7m5fnltcdb776q4kur28g.apps.googleusercontent.com"  # dengzj
   # client-id: "560324516162-lonvgk8eijng2iiijhhv9nvsok6v9iq6.apps.googleusercontent.com"  # wuyz
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: "gpt-3.5-turbo"  # 或其他模型名称
+
+deepseek:
+  api-key: ${DEEPSEEK_API_KEY}
+  model: "DeepSeek-V3-0324"
